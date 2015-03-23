@@ -13,6 +13,14 @@ class Room:
         self.get_room_owner()
         self.get_room_viewers_count()
 
+    def format_count(self, origin_count):
+        if( '万' in origin_count):
+            count = origin_count.split('万')[0]
+            count = int( float(count) * 10000 )
+            return count
+        return origin_count
+
+
 
 class ZhanqiRoom(Room):
 
@@ -32,7 +40,7 @@ class ZhanqiRoom(Room):
         # print self.name
 
     def get_room_viewers_count(self):
-        self.viewers_count = self.item.span.span.string
+        self.viewers_count = self.format_count(self.item.span.span.string)
         # print self.viewers_count
 
     def get_room_owner(self):
@@ -54,7 +62,8 @@ class DouyuRoom(Room):
         self.name = self.item.h1.string
 
     def get_room_viewers_count(self):
-        self.viewers_count = self.item.select('span.view')[0].string
+        self.viewers_count = \
+                self.format_count(self.item.select('span.view')[0].string)
 
     def get_room_owner(self):
         self.owner = self.item.select('span.nnt')[0].string
