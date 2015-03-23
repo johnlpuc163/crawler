@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*- 
 
-import threading
-import urllib2
 import logging
+import threading
+import time
+import urllib2
 
 from bs4 import BeautifulSoup
 import redis
@@ -92,8 +93,6 @@ def main():
     logging.basicConfig(level=logging.DEBUG,
                         format='(%(threadName)-10s) %(message)s',
                         )
-    rooms = []
-    crawlers = [ZhanqiCrawl(), DouyuCrawl(), HuyaCrawl()]
 
     def worker(crawler):
         """thread worker function"""
@@ -102,16 +101,23 @@ def main():
         logging.debug('done')
         return
 
-    for crawler in crawlers:
-        t = threading.Thread(target=worker, args=(crawler,))
-        t.start()
+    crawlers = [ZhanqiCrawl(), DouyuCrawl(), HuyaCrawl()]
+    while(True):
+        logging.debug('awake!')
+        rooms = []
 
-    main_thread = threading.currentThread()
-    for t in threading.enumerate():
-        if t is main_thread:
-            continue
-        logging.debug('joining %s', t.getName())
-        t.join()
+        for crawler in crawlers:
+            t = threading.Thread(target=worker, args=(crawler,))
+            t.start()
+
+        main_thread = threading.currentThread()
+        for t in threading.enumerate():
+            if t is main_thread:
+                continue
+            logging.debug('joining %s', t.getName())
+            t.join()
+        logging.debug('sleeping!')
+        time.sleep(5)
 
 
 if __name__ == "__main__":
