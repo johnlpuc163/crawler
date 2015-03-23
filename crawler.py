@@ -117,7 +117,7 @@ def main():
             logging.debug('joining %s', t.getName())
             t.join()
         logging.debug('sleeping!')
-        time.sleep(5)
+        time.sleep(1)
 
 
 if __name__ == "__main__":
