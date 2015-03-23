@@ -57,7 +57,7 @@ class DouyuCrawl(Crawler):
     name = u'douyu'
 
     def crawl(self, url='http://www.douyutv.com/directory/game/DOTA2', count=5):
-        # content = urllib2.urlopen(url).read()
+        content = urllib2.urlopen(url).read()
         html = BeautifulSoup(content)
         lis = html.find(id='item_data').find_all('li')
         self.rooms = []
