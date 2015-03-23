@@ -90,20 +90,20 @@ class HuyaCrawl(Crawler):
 
 
 def main():
-    logging.basicConfig(level=logging.DEBUG,
-                        format='(%(threadName)-10s) %(message)s',
-                        )
+    # logging.basicConfig(level=logging.DEBUG,
+    #                     format='(%(threadName)-10s) %(message)s',
+    #                     )
 
     def worker(crawler):
         """thread worker function"""
-        logging.debug('make request from' + crawler.name)
+        # logging.debug('make request from' + crawler.name)
         rooms.extend(crawler.crawl())
-        logging.debug('done')
+        # logging.debug('done')
         return
 
     crawlers = [ZhanqiCrawl(), DouyuCrawl(), HuyaCrawl()]
     while(True):
-        logging.debug('awake!')
+        # logging.debug('awake!')
         rooms = []
 
         for crawler in crawlers:
@@ -114,9 +114,9 @@ def main():
         for t in threading.enumerate():
             if t is main_thread:
                 continue
-            logging.debug('joining %s', t.getName())
-            t.join()
-        logging.debug('sleeping!')
+            # logging.debug('joining %s', t.getName())
+            t.join(5)
+        # logging.debug('sleeping!')
         time.sleep(1)
 
 
