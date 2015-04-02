@@ -37,11 +37,11 @@ class ZhanqiRoom(Room):
         # print self.url
 
     def get_room_name(self):
-        self.name = self.item.select('.info-area')[0].a.string
+        self.name = self.item.select('span.name')[0].string
         # print self.name
 
     def get_room_viewers_count(self):
-        self.viewers_count = self.item.span.span.string
+        self.viewers_count = self.item.select('span.dv')[0].string
         # print self.viewers_count
 
     def get_room_owner(self):
