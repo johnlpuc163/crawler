@@ -33,7 +33,7 @@ class ZhanqiRoom(Room):
         # print self.img
 
     def get_room_url(self):
-        self.url = self.root + self.item.select('.info-area')[0].a['href']
+        self.url = self.root + self.item.a['href']
         # print self.url
 
     def get_room_name(self):
